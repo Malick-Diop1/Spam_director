@@ -299,4 +299,9 @@ class Medecin
 
         return $this;
     }
+
+    public function __toString()
+    {
+      return "".$this->getnom()." ".$this->getPrenom()." ".$this->getdateNaissance()." ".$this->getadresse()." ".$this->getVille()." ".$this->gettelephone()." ".$this->getgsm()." ".$this->getemail()." ".$this->getfax()." ".$this->getspecialite()." ".$this->getnationalite();
+    }
 }

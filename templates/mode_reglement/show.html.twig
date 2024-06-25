@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ModeReglement{% endblock %}
+
+{% block body %}
+    <h1>ModeReglement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ mode_reglement.id }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ mode_reglement.code }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ mode_reglement.libelle }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_mode_reglement_index') }}">back to list</a>
+
+    <a href="{{ path('app_mode_reglement_edit', {'id': mode_reglement.id}) }}">edit</a>
+
+    {{ include('mode_reglement/_delete_form.html.twig') }}
+{% endblock %}

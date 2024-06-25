@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Medecin{% endblock %}
+
+{% block body %}
+    <h1>Medecin</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>User_create</th>
+                <td>{{ medecin.userCreate }}</td>
+            </tr>
+            <tr>
+                <th>User_update</th>
+                <td>{{ medecin.userUpdate }}</td>
+            </tr>
+            <tr>
+                <th>User_delete</th>
+                <td>{{ medecin.userDelete }}</td>
+            </tr>
+            <tr>
+                <th>Date_create</th>
+                <td>{{ medecin.dateCreate ? medecin.dateCreate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date_update</th>
+                <td>{{ medecin.dateUpdate ? medecin.dateUpdate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date_delete</th>
+                <td>{{ medecin.dateDelete ? medecin.dateDelete|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ medecin.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ medecin.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ medecin.Prenom }}</td>
+            </tr>
+            <tr>
+                <th>DateNaissance</th>
+                <td>{{ medecin.dateNaissance ? medecin.dateNaissance|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ medecin.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ medecin.Ville }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ medecin.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Gsm</th>
+                <td>{{ medecin.gsm }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ medecin.email }}</td>
+            </tr>
+            <tr>
+                <th>Fax</th>
+                <td>{{ medecin.fax }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_medecin_index') }}">back to list</a>
+
+    <a href="{{ path('app_medecin_edit', {'id': medecin.id}) }}">edit</a>
+
+    {{ include('medecin/_delete_form.html.twig') }}
+{% endblock %}
