@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PatientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -74,8 +76,7 @@ class Patient
     #[ORM\Column(length: 255)]
     private ?string $priseEnCharge = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $assureur = null;
+
 
     #[ORM\Column(length: 255)]
     private ?string $medcin = null;
@@ -100,6 +101,33 @@ class Patient
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $qualite = null;
+
+    #[ORM\ManyToOne]
+    private ?Nationalite $nationalite = null;
+
+    #[ORM\ManyToOne]
+    private ?Domain $domaine = null;
+
+    #[ORM\ManyToOne]
+    private ?Assureur $assureur = null;
+
+    /**
+     * @var Collection<int, Consultation>
+     */
+    #[ORM\OneToMany(targetEntity: Consultation::class, mappedBy: 'patient', orphanRemoval: true)]
+    private Collection $consultation;
+
+    /**
+     * @var Collection<int, Reglement>
+     */
+    #[ORM\OneToMany(targetEntity: Reglement::class, mappedBy: 'patient', orphanRemoval: true)]
+    private Collection $reglement;
+
+    public function __construct()
+    {
+        $this->consultation = new ArrayCollection();
+        $this->reglement = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -346,17 +374,6 @@ class Patient
         return $this;
     }
 
-    public function getAssureur(): ?string
-    {
-        return $this->assureur;
-    }
-
-    public function setAssureur(string $assureur): static
-    {
-        $this->assureur = $assureur;
-
-        return $this;
-    }
 
     public function getMedcin(): ?string
     {
@@ -450,6 +467,102 @@ class Patient
     public function setQualite(?string $qualite): static
     {
         $this->qualite = $qualite;
+
+        return $this;
+    }
+
+    public function getNationalite(): ?Nationalite
+    {
+        return $this->nationalite;
+    }
+
+    public function setNationalite(?Nationalite $nationalite): static
+    {
+        $this->nationalite = $nationalite;
+
+        return $this;
+    }
+
+    public function getDomaine(): ?Domain
+    {
+        return $this->domaine;
+    }
+
+    public function setDomaine(?Domain $domaine): static
+    {
+        $this->domaine = $domaine;
+
+        return $this;
+    }
+
+    public function getAssureur(): ?Assureur
+    {
+        return $this->assureur;
+    }
+
+    public function setAssureur(?Assureur $assureur): static
+    {
+        $this->assureur = $assureur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Consultation>
+     */
+    public function getConsultation(): Collection
+    {
+        return $this->consultation;
+    }
+
+    public function addConsultation(Consultation $consultation): static
+    {
+        if (!$this->consultation->contains($consultation)) {
+            $this->consultation->add($consultation);
+            $consultation->setPatient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConsultation(Consultation $consultation): static
+    {
+        if ($this->consultation->removeElement($consultation)) {
+            // set the owning side to null (unless already changed)
+            if ($consultation->getPatient() === $this) {
+                $consultation->setPatient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reglement>
+     */
+    public function getReglement(): Collection
+    {
+        return $this->reglement;
+    }
+
+    public function addReglement(Reglement $reglement): static
+    {
+        if (!$this->reglement->contains($reglement)) {
+            $this->reglement->add($reglement);
+            $reglement->setPatient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReglement(Reglement $reglement): static
+    {
+        if ($this->reglement->removeElement($reglement)) {
+            // set the owning side to null (unless already changed)
+            if ($reglement->getPatient() === $this) {
+                $reglement->setPatient(null);
+            }
+        }
 
         return $this;
     }
