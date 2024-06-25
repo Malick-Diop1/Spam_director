@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\Medcin;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Medecin;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Medcin>
  */
-class MedcinRepository extends ServiceEntityRepository
+class MedecinRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Medcin::class);
+        parent::__construct($registry, Medecin::class);
     }
 
     //    /**
-    //     * @return Medcin[] Returns an array of Medcin objects
+    //     * @return Medecin[] Returns an array of Medecin objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class MedcinRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Medcin
+    //    public function findOneBySomeField($value): ?Medecin
     //    {
     //        return $this->createQueryBuilder('m')
     //            ->andWhere('m.exampleField = :val')
