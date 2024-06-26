@@ -30,6 +30,8 @@ class AssureurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $assureur->setUserCreate($this->getUser());
+            $assureur->setDateCreate(new \DateTime('now'));
             $entityManager->persist($assureur);
             $entityManager->flush();
 
@@ -57,6 +59,8 @@ class AssureurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $assureur->setUserUpdate($this->getUser());
+            $assureur->setDateUpdate(new \DateTime('now'));
             $entityManager->flush();
 
             return $this->redirectToRoute('app_assureur_index', [], Response::HTTP_SEE_OTHER);
@@ -72,6 +76,8 @@ class AssureurController extends AbstractController
     public function delete(Request $request, Assureur $assureur, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$assureur->getId(), $request->getPayload()->getString('_token'))) {
+            $assureur->setUserDelete($this->getUser());
+            $assureur->setDateDelete(new \DateTime('now'));
             $entityManager->remove($assureur);
             $entityManager->flush();
         }

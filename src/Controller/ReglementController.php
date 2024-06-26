@@ -30,6 +30,8 @@ class ReglementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $reglement->setUserCreate($this->getUser());
+            $reglement->setDateCreate(new \DateTime('now'));
             $entityManager->persist($reglement);
             $entityManager->flush();
 
@@ -57,6 +59,8 @@ class ReglementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $reglement->setUserUpdate($this->getUser());
+            $reglement->setDateUpdate(new \DateTime('now'));
             $entityManager->flush();
 
             return $this->redirectToRoute('app_reglement_index', [], Response::HTTP_SEE_OTHER);
@@ -72,6 +76,8 @@ class ReglementController extends AbstractController
     public function delete(Request $request, Reglement $reglement, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$reglement->getId(), $request->getPayload()->getString('_token'))) {
+            $reglement->setUserDelete($this->getUser());
+            $reglement->setDateDelete(new \DateTime('now'));
             $entityManager->remove($reglement);
             $entityManager->flush();
         }

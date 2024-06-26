@@ -30,6 +30,8 @@ class NationaliteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $nationalite->setUserCreate($this->getUser());
+            $nationalite->setDateCreate(new \DateTime('now'));
             $entityManager->persist($nationalite);
             $entityManager->flush();
 
@@ -57,6 +59,8 @@ class NationaliteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $nationalite->setUserUpdate($this->getUser());
+            $nationalite->setDateUpdate(new \DateTime('now'));
             $entityManager->flush();
 
             return $this->redirectToRoute('app_nationalite_index', [], Response::HTTP_SEE_OTHER);
@@ -72,6 +76,8 @@ class NationaliteController extends AbstractController
     public function delete(Request $request, Nationalite $nationalite, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$nationalite->getId(), $request->getPayload()->getString('_token'))) {
+            $nationalite->setUserDelete($this->getUser());
+            $nationalite->setDateDelete(new \DateTime('now'));
             $entityManager->remove($nationalite);
             $entityManager->flush();
         }

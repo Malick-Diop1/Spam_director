@@ -30,6 +30,8 @@ class HoraireController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $horaire->setUserCreate($this->getUser());
+            $horaire->setDateCreate(new \DateTime('now'));
             $entityManager->persist($horaire);
             $entityManager->flush();
 
@@ -57,6 +59,8 @@ class HoraireController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $horaire->setUserUpdate($this->getUser());
+            $horaire->setDateUpdate(new \DateTime('now'));
             $entityManager->flush();
 
             return $this->redirectToRoute('app_horaire_index', [], Response::HTTP_SEE_OTHER);
@@ -72,6 +76,8 @@ class HoraireController extends AbstractController
     public function delete(Request $request, Horaire $horaire, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$horaire->getId(), $request->getPayload()->getString('_token'))) {
+            $horaire->setUserDelete($this->getUser());
+            $horaire->setDateDelete(new \DateTime('now'));
             $entityManager->remove($horaire);
             $entityManager->flush();
         }

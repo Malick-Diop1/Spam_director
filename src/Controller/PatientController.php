@@ -30,6 +30,8 @@ class PatientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $patient->setUserCreate($this->getUser());
+            $patient->setDateCreate(new \DateTime('now'));
             $entityManager->persist($patient);
             $entityManager->flush();
 
@@ -57,6 +59,8 @@ class PatientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $patient->setUserUpdate($this->getUser());
+            $patient->setDateUpdate(new \DateTime('now'));
             $entityManager->flush();
 
             return $this->redirectToRoute('app_patient_index', [], Response::HTTP_SEE_OTHER);
@@ -72,6 +76,8 @@ class PatientController extends AbstractController
     public function delete(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$patient->getId(), $request->getPayload()->getString('_token'))) {
+            $patient->setUserDelete($this->getUser());
+            $patient->setDateDelete(new \DateTime('now'));
             $entityManager->remove($patient);
             $entityManager->flush();
         }

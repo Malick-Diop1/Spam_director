@@ -30,6 +30,8 @@ class RdvController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $rdv->setUserCreate($this->getUser());
+            $rdv->setDateCreate(new \DateTime('now'));
             $entityManager->persist($rdv);
             $entityManager->flush();
 
@@ -57,6 +59,8 @@ class RdvController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $rdv->setUserUpdate($this->getUser());
+            $rdv->setDateUpdate(new \DateTime('now'));
             $entityManager->flush();
 
             return $this->redirectToRoute('app_rdv_index', [], Response::HTTP_SEE_OTHER);
@@ -72,6 +76,8 @@ class RdvController extends AbstractController
     public function delete(Request $request, Rdv $rdv, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$rdv->getId(), $request->getPayload()->getString('_token'))) {
+            $rdv->setUserDelete($this->getUser());
+            $rdv->setDateDelete(new \DateTime('now'));
             $entityManager->remove($rdv);
             $entityManager->flush();
         }

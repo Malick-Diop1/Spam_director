@@ -30,6 +30,8 @@ class SpecialiteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $specialite->setUserCreate($this->getUser());
+            $specialite->setDateCreate(new \DateTime('now'));
             $entityManager->persist($specialite);
             $entityManager->flush();
 
@@ -57,6 +59,8 @@ class SpecialiteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $specialite->setUserUpdate($this->getUser());
+            $specialite->setDateUpdate(new \DateTime('now'));
             $entityManager->flush();
 
             return $this->redirectToRoute('app_specialite_index', [], Response::HTTP_SEE_OTHER);
@@ -72,6 +76,8 @@ class SpecialiteController extends AbstractController
     public function delete(Request $request, Specialite $specialite, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$specialite->getId(), $request->getPayload()->getString('_token'))) {
+            $specialite->setUserDelete($this->getUser());
+            $specialite->setDateDelete(new \DateTime('now'));
             $entityManager->remove($specialite);
             $entityManager->flush();
         }

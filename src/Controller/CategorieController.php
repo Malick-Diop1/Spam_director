@@ -30,6 +30,8 @@ class CategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $categorie->setUserCreate($this->getUser());
+            $categorie->setDateCreate(new \DateTime('now'));
             $entityManager->persist($categorie);
             $entityManager->flush();
 
@@ -57,6 +59,8 @@ class CategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $categorie->setUserUpdate($this->getUser());
+            $categorie->setDateUpdate(new \DateTime('now'));
             $entityManager->flush();
 
             return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
@@ -72,6 +76,8 @@ class CategorieController extends AbstractController
     public function delete(Request $request, Categorie $categorie, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$categorie->getId(), $request->getPayload()->getString('_token'))) {
+            $categorie->setUserDelete($this->getUser());
+            $categorie->setDateDelete(new \DateTime('now'));
             $entityManager->remove($categorie);
             $entityManager->flush();
         }

@@ -30,6 +30,8 @@ class DomainController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $domain->setUserCreate($this->getUser());
+            $domain->setDateCreate(new \DateTime('now'));
             $entityManager->persist($domain);
             $entityManager->flush();
 
@@ -57,6 +59,8 @@ class DomainController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $domain->setUserUpdate($this->getUser());
+            $domain->setDateUpdate(new \DateTime('now'));
             $entityManager->flush();
 
             return $this->redirectToRoute('app_domain_index', [], Response::HTTP_SEE_OTHER);
@@ -72,6 +76,8 @@ class DomainController extends AbstractController
     public function delete(Request $request, Domain $domain, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$domain->getId(), $request->getPayload()->getString('_token'))) {
+            $domain->setUserDelete($this->getUser());
+            $domain->setDateDelete(new \DateTime('now'));
             $entityManager->remove($domain);
             $entityManager->flush();
         }

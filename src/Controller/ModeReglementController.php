@@ -30,6 +30,8 @@ class ModeReglementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $modeReglement->setUserCreate($this->getUser());
+            $modeReglement->setDateCreate(new \DateTime('now'));
             $entityManager->persist($modeReglement);
             $entityManager->flush();
 
@@ -57,6 +59,8 @@ class ModeReglementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $modeReglement->setUserUpdate($this->getUser());
+            $modeReglement->setDateUpdate(new \DateTime('now'));
             $entityManager->flush();
 
             return $this->redirectToRoute('app_mode_reglement_index', [], Response::HTTP_SEE_OTHER);
@@ -72,6 +76,8 @@ class ModeReglementController extends AbstractController
     public function delete(Request $request, ModeReglement $modeReglement, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$modeReglement->getId(), $request->getPayload()->getString('_token'))) {
+            $modeReglement->setUserDelete($this->getUser());
+            $modeReglement->setDateDelete(new \DateTime('now'));
             $entityManager->remove($modeReglement);
             $entityManager->flush();
         }

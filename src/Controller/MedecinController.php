@@ -30,6 +30,8 @@ class MedecinController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $medecin->setUserCreate($this->getUser());
+            $medecin->setDateCreate(new \DateTime('now'));
             $entityManager->persist($medecin);
             $entityManager->flush();
 
@@ -57,6 +59,8 @@ class MedecinController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $medecin->setUserUpdate($this->getUser());
+            $medecin->setDateUpdate(new \DateTime('now'));
             $entityManager->flush();
 
             return $this->redirectToRoute('app_medecin_index', [], Response::HTTP_SEE_OTHER);
@@ -72,6 +76,8 @@ class MedecinController extends AbstractController
     public function delete(Request $request, Medecin $medecin, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$medecin->getId(), $request->getPayload()->getString('_token'))) {
+            $medecin->setUserDelete($this->getUser());
+            $medecin->setDateDelete(new \DateTime('now'));
             $entityManager->remove($medecin);
             $entityManager->flush();
         }

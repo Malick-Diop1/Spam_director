@@ -30,6 +30,8 @@ class ConsultationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $consultation->setUserCreate($this->getUser());
+            $consultation->setDateCreate(new \DateTime('now'));
             $entityManager->persist($consultation);
             $entityManager->flush();
 
@@ -57,6 +59,8 @@ class ConsultationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $consultation->setUserUpdate($this->getUser());
+            $consultation->setDateUpdate(new \DateTime('now'));
             $entityManager->flush();
 
             return $this->redirectToRoute('app_consultation_index', [], Response::HTTP_SEE_OTHER);
@@ -72,6 +76,8 @@ class ConsultationController extends AbstractController
     public function delete(Request $request, Consultation $consultation, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$consultation->getId(), $request->getPayload()->getString('_token'))) {
+            $consultation->setUserDelete($this->getUser());
+            $consultation->setDateDelete(new \DateTime('now'));
             $entityManager->remove($consultation);
             $entityManager->flush();
         }
