@@ -16,7 +16,6 @@ class RdvType extends AbstractType
     {
         $builder
             ->add('numero')
-            ->add('annee')
             ->add('date', null, [
                 'widget' => 'single_text',
             ])
