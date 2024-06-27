@@ -36,7 +36,7 @@ class PatientType extends AbstractType
             ->add('nCnss')
             ->add('identUnique')
             ->add('priseEnCharge')
-            ->add('medcin')
+            ->add('medecin')
             ->add('datePrdv', null, [
                 'widget' => 'single_text',
             ])

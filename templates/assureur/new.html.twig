@@ -3,9 +3,21 @@
 {% block title %}New Assureur{% endblock %}
 
 {% block body %}
-    <h1>Create new Assureur</h1>
+    <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-primary mb-3">
+                <div class="card-header">
+                    <h1>Create new Assureur</h1>
+                </div>
+                <div class="card-body">
+                    {{ include('assureur/_form.html.twig') }}
 
-    {{ include('assureur/_form.html.twig') }}
+                    <a href="{{ path('app_assureur_index') }}">Back to list</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <a href="{{ path('app_assureur_index') }}">back to list</a>
 {% endblock %}
